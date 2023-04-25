@@ -9,32 +9,16 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';// Importa el archivo de estilos CSS
 import Libro from './pages/Libro';
+import Header from './components/Header';
 
 function App() {
   return (
-    <Router>
-      <header className="header"> {/* Aplica la clase de estilo CSS en el encabezado */}
-        <nav>
-          <ul className="nav"> {/* Aplica la clase de estilo CSS en la lista de navegación */}
-            <li>
-              <Link to="/home">Home</Link>
-            </li>
-            <li>
-              <Link to="/autor">Autores</Link>
-            </li>
-            <li>
-              <Link to="/libros">Libros</Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <>
+        <Header />
+        <div style={{ backgroundImage : 'url("../public/Images/cool-background.jpg")' }}>
+        </div>
+      </>
 
-      <Routes>
-        <Route path="/autor" element={<Autor />} />
-        <Route path="/home" element={<h1>Bienvenidos a la biblioteca</h1>} />
-        <Route path="/libros" element={<Libro />} />
-      </Routes>
-    </Router>
   );
 }
 
