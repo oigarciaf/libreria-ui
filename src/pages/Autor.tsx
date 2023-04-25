@@ -15,10 +15,10 @@ import {
 
 function Autor() {
 
-    const [autores, setAutores] = useState<AutorType[]>([]);
-    const [autor, setAutor] = useState<string>("");  
-    const [editingId, setEditingId] = useState<number | null>(null);
-    const [editingAutor, setEditingAutor] = useState<string>("");
+    const [autores, setAutores] = useState<AutorType[]>([]); // Estado para almacenar los autores
+    const [autor, setAutor] = useState<string>("");  // Estado para el autor actual que se está agregando o editando
+    const [editingId, setEditingId] = useState<number | null>(null);// Estado para el ID del autor que se está editando
+    const [editingAutor, setEditingAutor] = useState<string>("");// Estado para el nombre del autor que se está editando
  
 
 
@@ -27,53 +27,53 @@ function Autor() {
     }
 
     const addAutorEvent = async () => {
-        const newAutor = await addAutor(autor);
-        setAutores([...autores, newAutor]);
-        setAutor("");
+        const newAutor = await addAutor(autor); // Agrega un nuevo autor
+        setAutores([...autores, newAutor]); // Actualiza la lista de autores con el nuevo autor agregado
+        setAutor(""); // Limpia el campo de entrada del autor
     }
 
     const deleteAutorEvent = async (id: number) => {
-        await deleteAutor(id);
-        setAutores(autores.filter((autor) => autor.id !== id));
+        await deleteAutor(id); // Elimina el autor con el ID especificado
+        setAutores(autores.filter((autor) => autor.id !== id));  // Actualiza la lista de autores eliminando el autor eliminado
     }
 
     const startEditing = (id: number, descripcion: string) => {
         if(editingId === null){
-            setEditingId(id);
-            setEditingAutor(descripcion);
-            setAutor(descripcion);
+            setEditingId(id); // Establece el ID del autor que se está editando
+            setEditingAutor(descripcion); // Establece el nombre del autor que se está editando
+            setAutor(descripcion); // Establece el nombre del autor en el campo de entrada
         }
        
     }
 
     const cancelEditing = () => {
-        setEditingId(null);
-        setEditingAutor("");
-        setAutor("");
+        setEditingId(null); // Limpia el ID del autor que se está editando
+        setEditingAutor(""); // Limpia el nombre del autor que se está editando
+        setAutor(""); // Limpia el campo de entrada del autor
     }
 
     const updateAutorEvent = async () => {
         if (editingId !== null) {
-            await updateAutor(editingId, autor);
+            await updateAutor(editingId, autor); // Actualiza el autor con el ID y nombre especificados
             setAutores(
-                autores.map((c) => {
-                if (c.id === editingId) {
-                    return { ...c, descripcion: autor };
+                autores.map((a) => {
+                if (a.id === editingId) {
+                    return { ...a, descripcion: autor }; // Actualiza el nombre del autor en la lista de autores
                 } else {
-                    return c;
+                    return a;
                 }
             }));
-            setEditingId(null);
-            setEditingAutor("");
-            setAutor("");
+            setEditingId(null); // Limpia el ID del autor que se está editando
+            setEditingAutor(""); // Limpia el nombre del autor que se está editando
+            setAutor(""); // Limpia el campo de entrada del autor
         }
     }
     
     useEffect(() => {
         async function fetchData() {
             
-            const x = await getAutores();
-            setAutores(x);
+            const x = await getAutores(); // Obtiene la lista de autores
+            setAutores(x); // Actualiza la lista de autores con los datos obtenidos
         };
         fetchData();
     }, []);
@@ -98,8 +98,14 @@ function Autor() {
                 
             ): (
                 <div>
-                    <button onClick={updateAutorEvent}>Update</button>
-                    <button onClick={cancelEditing}>Cancel</button>
+                    <button 
+                        onClick={updateAutorEvent}>
+                        Update
+                    </button>
+                    <button 
+                        onClick={cancelEditing}>
+                        Cancel
+                    </button>
                 </div>
             )}
 
@@ -108,18 +114,17 @@ function Autor() {
                     <li key={autor.id} >
                         {editingId === autor.id ?  (
                             <input
-                             type="text"
                              value = {editingAutor} 
                              onChange = {(e) => setEditingAutor(e.target.value)}
                              />
                         ) : (autor.descripcion)} 
 
                         <button onClick={
-                            () => deleteAutorEvent(autor.id)} disabled = {editingId !== null}
+                            () => deleteAutorEvent(autor.id)} disabled = {editingId === (0) }
                          >
                             Remove
                         </button>
-                        <button onClick={() => startEditing(autor.id, autor.descripcion)} disabled={editingId !== null}>
+                        <button onClick={() => startEditing(autor.id, autor.descripcion)} disabled={editingId === (0)}>
                             Edit
                             </button>
                         

@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+/*####################################################################*/
+.header {
+  background: lightblue;
+  padding: 16px;
+  text-align: center;
+}
+
+.nav {
+  list-style: none;
+  padding: 0;
+}
+
+.nav li {
+  display: inline-block;
+  margin: 0 16px;
+}
+/*########################################################################*/

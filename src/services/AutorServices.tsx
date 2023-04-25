@@ -12,7 +12,9 @@ export async function getAutores(): Promise<AutorType[]> {
     const response = await axios.get<AutorType[]>(
         `${URI}/api/autores`
     );
+    console.log(response.data);
     return response.data;
+    
 }
 
 export async function addAutor(autor: string): Promise<AutorType> {

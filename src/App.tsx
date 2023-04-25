@@ -1,45 +1,39 @@
 import React from 'react';
-
-
 import Autor from './pages/Autor';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-} from 'react-router-dom';
+import  axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import './App.css';// Importa el archivo de estilos CSS
+import Libro from './pages/Libro';
 
 function App() {
   return (
     <Router>
-      <nav>
-        <ul>
-          <li>            
-            <Link to="/home">
-              Home
-            </Link>            
-          </li>
-          <li>            
-            <Link to="/autor">
-              Autores 
-            </Link>            
-          </li>
-        </ul>
-      </nav>
-      
+      <header className="header"> {/* Aplica la clase de estilo CSS en el encabezado */}
+        <nav>
+          <ul className="nav"> {/* Aplica la clase de estilo CSS en la lista de navegación */}
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/autor">Autores</Link>
+            </li>
+            <li>
+              <Link to="/libros">Libros</Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
       <Routes>
-        <Route 
-          path="/autor" 
-          element={<Autor />} 
-        />
-        <Route 
-          path="/home" 
-          element={<h1>Hello OOP Student</h1>} 
-        />
+        <Route path="/autor" element={<Autor />} />
+        <Route path="/home" element={<h1>Bienvenidos a la biblioteca</h1>} />
+        <Route path="/libros" element={<Libro />} />
       </Routes>
-      
     </Router>
   );
 }
