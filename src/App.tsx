@@ -10,13 +10,12 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';// Importa el archivo de estilos CSS
 import Libro from './pages/Libro';
 import Header from './components/Header';
+import Home from './pages/Home';
 
 function App() {
   return (
       <>
         <Header />
-        <div style={{ backgroundImage : 'url("../public/Images/cool-background.jpg")' }}>
-        </div>
       </>
 
   );

@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Libro from '../pages/Libro';
 import Autor from '../pages/Autor';
 import Home from '../pages/Home';
+import Genero from '../pages/Genero';
 
 
 
@@ -47,7 +48,7 @@ function OffcanvasExample() {
                         <NavDropdown.Divider />
                         <Link style={{backgroundColor:"#ffffe6"}} className='btn' to="#">Editoriales</Link>
                         <NavDropdown.Divider />
-                        <Link style={{backgroundColor:"#ffe6e6"}} className='btn' to="#">Generos Literarios</Link>
+                        <Link style={{backgroundColor:"#ffe6e6"}} className='btn' to="/generos">Generos Literarios</Link>
 
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action5">
@@ -74,6 +75,7 @@ function OffcanvasExample() {
                 <Route path="/autor" element={<Autor />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/libros" element={<Libro />} />
+                <Route path="/generos" element={<Genero />} />
             </Routes>
         </Router>
         </>
