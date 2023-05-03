@@ -20,15 +20,16 @@ const URI = "http://localhost:8080";
 /**######################################################### */
 export async function getLibro(): Promise<LibroType[]> {
   const response = await axios.get<LibroType[]>(
-    `${URI}/api/libros`);
+    `${URI}/api/libro`);
   console.log(response.data);
   return response.data;
 }
 
+
 export async function addLibro(libro: LibroType): Promise<LibroType> {
   
     const response = await axios.post<LibroType>(
-      `${URI}/api/libros`, libro
+      `${URI}/api/libro`, libro
       );
       return response.data;
   
@@ -36,13 +37,13 @@ export async function addLibro(libro: LibroType): Promise<LibroType> {
 
 export async function deleteLibro(id: number): Promise<void> {
   await axios.delete<void>(
-  `${URI}/api/libros/${id}`
+  `${URI}/api/libro/${id}`
    );
 }
 
 export async function updateLibro(id: number, libro: LibroType): Promise<LibroType> {
   const response = await axios.put<LibroType>(
-    `${URI}/api/libros/${id}`, libro
+    `${URI}/api/libro/${id}`, libro
      );
   return response.data;
 }

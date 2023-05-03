@@ -28,9 +28,19 @@ function Autor() {
         setAutores([...autores, newAutor]); // Actualiza la lista de autores con el nuevo autor agregado
         setAutor(""); // Limpia el campo de entrada del autor
     }
+    useEffect(() => {
+        async function fetchData() {
+            
+            const x = await getAutores(); // Obtiene la lista de autores
+            setAutores(x); // Actualiza la lista de autores con los datos obtenidos
+        };
+        fetchData();
+    }, []);
+
 
     return(
-        <></>
+        <>
+        </>
 )
 }
 export default Autor;

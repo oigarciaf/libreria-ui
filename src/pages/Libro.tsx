@@ -1,9 +1,12 @@
+import { IconProp, icon } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faImage, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+//import { faEdit, faImage, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import React, { Component } from 'react';
 import { faRoad } from '@fortawesome/free-solid-svg-icons';
 import { idText } from 'typescript';
+import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
+import Autor from './Autor';
 import {
   useState
   , useEffect
@@ -16,8 +19,6 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
-
-
 import {
   LibroType
   , getLibro
@@ -25,6 +26,7 @@ import {
   , deleteLibro
   , updateLibro
 } from "../services/LibroServices"
+import { AutorType, getAutores, addAutor } from '../services/AutorServices';
 
 
 
@@ -34,9 +36,37 @@ function Libro() {
   const [libro, setLibro] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  //###########################################
+  const [autores, setAutores] = useState<AutorType[]>([])
+  const [autor, setAutor] = useState<string>("");
+  const [showInput, setShowInput] = useState(false);
+  const [id_autor, setIdAutor] = useState("");
+  const [id_libro, setIdLibro] = useState("");
+  useEffect(() => {
+    async function fetchData() {
 
+      const autores = await getAutores(); // Obtiene la lista de autores
+      setAutores(autores); // Actualiza la lista de autores con los datos obtenidos
+    };
+    fetchData();
+  }, []);
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setIdAutor(value);
+  };
 
-
+ 
+  const addAutorEvent = async () => {
+    const newAutor = await addAutor(autor); // Agrega un nuevo autor
+    setAutores([...autores, newAutor]); // Actualiza la lista de autores con el nuevo autor agregado
+    setAutor(""); // Limpia el campo de entrada del autor
+    setShowInput(false);
+  }
+  //###########################################
+  const handleChanges = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setIdLibro(value);
+  };
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLibro(e.target.value);
   }
@@ -44,27 +74,33 @@ function Libro() {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  const addLibroEvent = async () => {
-    const newLibro: LibroType = { /* Crear un objeto LibroType a partir de la cadena de texto 'libro' */
-      id: 0,
-      id_autor: 0,
-      id_editorial: 0,
-      id_genero_libro: 0,
-      id_idioma: 0,
-      codigo: "",
-      titulo: "",
-      edicion: 0,
-      year_publicacion: 0,
-      imagen: selectedFile!,
-      resumen: ""
-
-    };
-    const result = await addLibro(newLibro); // Agrega un nuevo autor
-    setLibros([...libros, result]); // Actualiza la lista de autores con el nuevo autor agregado
-    setLibro(""); // Limpia el campo de entrada del autor
+  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
+    }
   }
-
   const handleGuardarLibro = () => {
+    const addLibroEvent = async () => {
+      const newLibro: LibroType = { /* Crear un objeto LibroType a partir de la cadena de texto 'libro' */
+        id: 0,
+        id_autor: 0,
+        id_editorial: 0,
+        id_genero_libro: 0,
+        id_idioma: 0,
+        codigo: "",
+        titulo: "",
+        edicion: 0,
+        year_publicacion: 0,
+        imagen: selectedFile!,
+        resumen: ""
+
+      };
+      const result = await addLibro(newLibro); // Agrega un nuevo autor
+      setLibros([...libros, result]); // Actualiza la lista de autores con el nuevo autor agregado
+      setLibro(""); // Limpia el campo de entrada del autor
+    }
+
+
     // Aquí puedes agregar la lógica para guardar la información del estudiante
     //console.log("Guardando estudiante:", { nombre, apellido, fechaNacimiento, telefono, email });
     handleCloseModal();
@@ -129,18 +165,18 @@ function Libro() {
               <td>{libro.year_publicacion}</td>
               <td>{libro.id_idioma}</td>
               <td> {libro.imagen && (
-          <img src={URL.createObjectURL(libro.imagen)} alt="Imagen del libro" />
-        )}</td>
+                <img src={URL.createObjectURL(libro.imagen)} alt="Imagen del libro" />
+              )}</td>
               <td>{libro.resumen}</td>
               <td>
-                <button
+                {/* <button
                   className="btn btn-primary"
                   onClick={() => {
                     // Lógica para manejar el clic del botón Editar
 
                   }}
                 >
-                  <FontAwesomeIcon icon={faEdit} />
+                  <FontAwesomeIcon icon={icon(faEdit) as IconProp} />
                 </button>
                 {"   "}
                 <button
@@ -151,7 +187,7 @@ function Libro() {
                   }}
                 >
                   <FontAwesomeIcon icon={faTrashAlt} />
-                </button>
+                </button>*/}
               </td>
 
             </tr>
@@ -162,7 +198,8 @@ function Libro() {
 
 
       {/************** */}
-      <Modal class="modal-dialog modal-lg" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true" isOpen={showModal} toggle={handleCloseModal}>
+      <Modal class="modal-dialog modal-lg" id="createModal" tabindex="-1" 
+      aria-labelledby="createModalLabel" aria-hidden="true" isOpen={showModal} toggle={handleCloseModal}>
 
         <div className="">
           <div className="modal-dialog">
@@ -187,11 +224,30 @@ function Libro() {
                     <div className='d-flex justify-content-between mb-3'>
                       <div className='flex-column align-items-start mb-3'>
                         <label htmlFor="id_autor" className="form-label">Autor</label>
-                        <input type="text" className="form-control" id="id_autor" name="id_autor" required />
+                        <select className="form-select form-select-lg mb-3" id="id_autor" 
+                        name="id_autor" required onChange={handleChange} value={id_autor}>
+                          <option selected>Selecciona un Autor</option>
+                          
+                          {autores.map((autor) => (
+                            <option key={autor.id} value={autor.id}>
+                              {autor.descripcion}
+                            </option>
+                          ))}
+                           
+                        </select>
+                       
                       </div>
                       <div className='flex-column align-items-start mb-3'>
                         <label htmlFor="id_genero_libro" className="form-label">Género</label>
-                        <input type="text" className="form-control" id="id_genero_libro" name="id_genero_libro" required />
+                        <select className="form-select form-select-lg mb-3" id="id_genero_libro"
+                         name="id_genero_libro" required onChange={handleChanges} value={id_libro}>
+                          <option selected >Selecciona un Genero</option>
+                          {libros.map((libro) => (
+                            <option key={libro.id} value={libro.id}>
+                              {libro.id}
+                            </option>
+                          ))}
+                        </select>
                       </div>
 
                     </div>
@@ -199,8 +255,12 @@ function Libro() {
                     <div className='d-flex justify-content-between mb-3'>
                       <div className='flex-column align-items-start mb-3'>
                         <label htmlFor="id_editorial" className="form-label">Editorial</label>
-                        <input type="text" className="form-control" id="id_editorial" name="id_editorial" required />
-
+                        <select className="form-select form-select-lg mb-3" id="id_editorial" name="id_editorial" required >
+                          <option selected>Selecciona una Editorial</option>
+                          <option value="1"></option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
                       </div>
 
                       <div className='flex-column align-items-start mb-3'>
@@ -219,7 +279,14 @@ function Libro() {
                       </div>
                       <div className='flex-column align-items-start mb-3'>
                         <label htmlFor="id_idioma" className="form-label">Idioma</label>
-                        <input type="text" className="form-control" id="id_idioma" name="id_idioma" required />
+                        <select className="form-select form-select-lg mb-3" id="id_idioma" name="id_idioma" required>
+                          <option selected>Selecciona un idioma</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+
+                        </select>
+
 
                       </div>
 
@@ -237,10 +304,10 @@ function Libro() {
                 </div>
               </ModalBody>
               <ModalFooter>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cerrar</button>
-                <button type="button" className="btn btn-primary" onClick={handleGuardarLibro} >Guardar</button>
-              </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Cerrar</button>
+                  <button type="button" className="btn btn-primary" onClick={handleGuardarLibro} >Guardar</button>
+                </div>
               </ModalFooter>
             </div>
           </div>
@@ -255,3 +322,4 @@ function Libro() {
 }
 
 export default Libro;
+
