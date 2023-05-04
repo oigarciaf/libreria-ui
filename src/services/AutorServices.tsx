@@ -5,7 +5,7 @@ export interface AutorType {
     descripcion: string;
 }
 
-const URI = "http://localhost:8080"
+const URI = "http://localhost:8000"
 
 
 export async function getAutores(): Promise<AutorType[]> {

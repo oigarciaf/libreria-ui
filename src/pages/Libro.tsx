@@ -140,7 +140,8 @@ function Libro() {
 
                   }}
                 >
-                  <FontAwesomeIcon icon={faEdit} />
+                  x
+                  {/* <FontAwesomeIcon icon={{faEdit}} /> */}
                 </button>
                 {"   "}
                 <button
@@ -150,7 +151,8 @@ function Libro() {
 
                   }}
                 >
-                  <FontAwesomeIcon icon={faTrashAlt} />
+                  x
+                  {/* <FontAwesomeIcon icon={{faTrashAlt}} /> */}
                 </button>
               </td>
 

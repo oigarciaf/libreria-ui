@@ -6,31 +6,120 @@ import {
 } from "react";
 
 import { 
-    AutorType
-    , getAutores
-    , addAutor
-    , deleteAutor
-    ,updateAutor
- } from "../services/AutorServices"
+    EditorialType
+    , getEditoriales
+    , addEditorial
+    , deleteEditorial
+    , updateEditorial
+ } from "../services/EditorialServices"
 
-function Autor() {
 
-    const [autores, setAutores] = useState<AutorType[]>([]); // Estado para almacenar los autores
-    const [autor, setAutor] = useState<string>("");  // Estado para el autor actual que se está agregando o editando
+function Editorial() {
 
-    
+    const [editoriales, setEditoriales] = useState<EditorialType[]>([]);
+    const [editorial, setEditorial] = useState<string>("");
+    const [id, setId] = useState<number>(0);
+    const [isUpdating, setIsUpdating] = useState<boolean>(false);
+
+
     const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAutor(e.target.value);
+        setEditorial(e.target.value);
     }
 
-    const addAutorEvent = async () => {
-        const newAutor = await addAutor(autor); // Agrega un nuevo autor
-        setAutores([...autores, newAutor]); // Actualiza la lista de autores con el nuevo autor agregado
-        setAutor(""); // Limpia el campo de entrada del autor
+    const addEditorialEvent = async () => {
+        const newEditorial = await addEditorial(editorial);
+        setEditoriales([...editoriales, newEditorial]);
+        setEditorial("");
     }
 
-    return(
-        <></>
-)
+    const deleteEditorialEvent = async (id: number) => {
+        await deleteEditorial(id);
+        setEditoriales(editoriales.filter((editorial) => editorial.id !== id));
+    }
+
+    const startEditEditorial = (id: number, descripcion: string) => {
+        setIsUpdating(true);
+        setEditorial(descripcion);
+        setId(id);
+    }
+
+    const stopEditEditorial = () => {
+        setIsUpdating(false);
+        setEditorial("");
+    }
+
+    const updateEditorialEvent = async () => {
+        const newEditorial = await updateEditorial(id, editorial);
+        setEditoriales(editoriales.map((editorial) => editorial.id === id ? newEditorial : editorial));
+        setIsUpdating(false);
+        setEditorial("");
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+            
+            const x = await getEditoriales();
+            setEditoriales(x);
+        };
+        fetchData();
+    }, []);
+
+    return (
+        <div>
+        <h1>Editoriales Management</h1>
+
+            <span>Editorial: </span>
+            <input 
+                type="text" 
+                placeholder="Type your new editorial"
+                value={editorial}
+                onChange={changeInput}
+            />
+            <button
+                disabled={ editorial.length == 0 }
+                onClick={ isUpdating ? updateEditorialEvent : addEditorialEvent }
+            >
+                { isUpdating ? "Update" : "Add" }
+            </button>
+            
+            { 
+                isUpdating && 
+                <button
+                    onClick={stopEditEditorial}
+                >
+                    Cancel
+                </button>
+            }
+            
+
+
+            <ul>
+                { editoriales.map((editorial) => (
+                    <li key={editorial.id} >
+                        { editorial.descripcion }
+                        <button 
+                            onClick={
+                                () => deleteEditorialEvent(editorial.id)
+                            }
+                            disabled={isUpdating}
+                        >
+                            Remove
+                        </button>
+                        <button
+                            disabled={isUpdating}
+                            onClick={
+                                () => startEditEditorial(editorial.id, editorial.descripcion)
+                            }
+                        >
+                            Edit
+                        </button>
+                    </li>
+                    
+                ))}
+            </ul>
+
+        </div>
+    );
 }
-export default Autor;
+
+export default Editorial;

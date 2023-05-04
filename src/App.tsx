@@ -1,6 +1,11 @@
 import React from 'react';
+import axios from "axios";
+import Libro from './pages/Libro';
 import Autor from './pages/Autor';
-import  axios from "axios";
+import Idioma from './pages/Idioma';
+import Editorial from './pages/Editorial';
+import GeneroLibro from './pages/GeneroLibro';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -9,9 +14,9 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';// Importa el archivo de estilos CSS
-import Libro from './pages/Libro';
 
 import EstudianteModal from './pages/Prueva';
+import Components from './pages/Components';
 
 function App() {
   return (
@@ -26,9 +31,19 @@ function App() {
               <Link to="/autor">Autores</Link>
             </li>
             <li>
-              <Link to="/libros">
-                
-                Libros</Link>
+              <Link to="/idioma">Idiomas</Link>
+            </li>
+            <li>
+              <Link to="/editorial">Editoriales</Link>
+            </li>
+            <li>
+              <Link to="/generoLibro">Generos</Link>
+            </li>
+            <li>
+              <Link to="/components">Components</Link>
+            </li>
+            <li>
+              <Link to="/libros">Libros</Link>
             </li>
             <li>
               <Link to="/provar">
@@ -41,6 +56,10 @@ function App() {
 
       <Routes>
         <Route path="/autor" element={<Autor />} />
+        <Route path="/idioma" element={<Idioma />} />
+        <Route path="/editorial" element={<Editorial />} />
+        <Route path="/generoLibro" element={<GeneroLibro />} />
+        <Route path="/components" element={<Components />} />
         <Route path="/home" element={<h1>Bienvenidos a la biblioteca</h1>} />
         <Route path="/libros" element={<Libro />} />
         <Route path="/provar" element={<EstudianteModal />}/>
