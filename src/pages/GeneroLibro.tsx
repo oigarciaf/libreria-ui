@@ -66,7 +66,6 @@ function GeneroLibro() {
 
     return (
         <div>
-        <h1>Generos Management</h1>
 
             <span>Generos: </span>
             <input 

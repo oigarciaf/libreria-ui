@@ -28,18 +28,6 @@ function App() {
               <Link to="/home">Home</Link>
             </li>
             <li>
-              <Link to="/autor">Autores</Link>
-            </li>
-            <li>
-              <Link to="/idioma">Idiomas</Link>
-            </li>
-            <li>
-              <Link to="/editorial">Editoriales</Link>
-            </li>
-            <li>
-              <Link to="/generoLibro">Generos</Link>
-            </li>
-            <li>
               <Link to="/components">Components</Link>
             </li>
             <li>
@@ -55,10 +43,6 @@ function App() {
       </header>
 
       <Routes>
-        <Route path="/autor" element={<Autor />} />
-        <Route path="/idioma" element={<Idioma />} />
-        <Route path="/editorial" element={<Editorial />} />
-        <Route path="/generoLibro" element={<GeneroLibro />} />
         <Route path="/components" element={<Components />} />
         <Route path="/home" element={<h1>Bienvenidos a la biblioteca</h1>} />
         <Route path="/libros" element={<Libro />} />

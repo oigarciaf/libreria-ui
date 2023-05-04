@@ -66,7 +66,6 @@ function Autor() {
 
     return (
         <div>
-        <h1>Autor Management</h1>
 
             <span>Autor: </span>
             <input 

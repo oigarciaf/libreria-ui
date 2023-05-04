@@ -75,7 +75,6 @@ function Editorial() {
 
     return (
         <div>
-        <h1>Editoriales Management</h1>
 
             <span>Editorial: </span>
             <input 

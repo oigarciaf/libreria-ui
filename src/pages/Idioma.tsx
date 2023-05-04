@@ -66,7 +66,6 @@ function Idioma() {
 
     return (
         <div>
-        <h1>Idioma Management</h1>
 
             <span>Idioma: </span>
             <input 
