@@ -31,6 +31,15 @@ function Editorial() {
         setEditoriales([...editoriales, newEditorial]);
         setEditorial("");
     }
+    useEffect(() => {
+        async function fetchData() {
+            
+            const x = await getEditoriales(); // Obtiene la lista de autores
+            setEditoriales(x); // Actualiza la lista de autores con los datos obtenidos
+        };
+        fetchData();
+    }, []);
+
 
     const deleteEditorialEvent = async (id: number) => {
         await deleteEditorial(id);
