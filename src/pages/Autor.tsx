@@ -29,16 +29,19 @@ function Autor() {
     const [idiomaSeleccionado, setIdiomaSeleccionado] = useState("");
     const [idiomas, setIdiomas] = useState<IdiomaType[]>([]);
 
+    // llamamos a setAutor para actualizarlo con el valor que se escriba en el input
     const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAutor(e.target.value);
     }
     
+    // funcion para crear un autor
     const addAutorEvent = async () => {
         const newAutor = await addAutor(autor, idiomaSeleccionado);
         setAutores([...autores, newAutor]);
         setAutor("");
     };  
-
+    
+    // funcion para actualizar un autor
     const updateAutorEvent = async () => {
         const newAutor = await updateAutor(id, autor, idiomaSeleccionado);
         setAutores(autores.map((autor) => (autor.id === id ? newAutor : autor)));
@@ -46,6 +49,7 @@ function Autor() {
         setAutor("");
     };  
 
+    // funcion para borrar un autor
     const deleteAutorEvent = async (id: number) => {
         await deleteAutor(id);
         setAutores(autores.filter((autor) => autor.id !== id));
@@ -63,7 +67,8 @@ function Autor() {
     }
 
 
-
+// cargamos con useEffect los idiomas disponibles
+// y luego se utiliza "setIdiomas" para actualizar el estado con los idiomas obtenidos.
     useEffect(() => {
             async function fetchData() {
             const idiomas = await getIdiomas();
@@ -118,6 +123,7 @@ function Autor() {
                     value={idiomaSeleccionado}
                     onChange={(e) => setIdiomaSeleccionado(e.target.value)}
                     >
+                    {/* mapeamos los idiomas para obtener la descripcion de cada uno */}
                     <option value="">Selecciona un idioma</option>
                     {idiomas.map((idioma) => (
                     <option key={idioma.id} value={idioma.id}>
@@ -141,8 +147,15 @@ function Autor() {
                                     }}>
 
                                     <div>
+                                        {/* mandamos a imprimir el nombre del autor */}
                                         { autor.descripcion }
-                                        <p>Idioma: {idiomas.find((i) => i.id === autor.id_idioma)?.descripcion || ''}</p>
+                                        {/* Buscamos en array de idiomas un id que sea igual al id_idioma del autor
+                                        y con el operador ternario, si encuentra la igualdad imprime la descripcion del idioma
+                                        y si no pues se imprime un string vacio */}
+                                        <p>Idioma: {idiomas.find((i) => 
+                                                    i.id === autor.id_idioma)?.descripcion || ''
+                                                    }
+                                        </p>
                                     </div>
 
                                     
