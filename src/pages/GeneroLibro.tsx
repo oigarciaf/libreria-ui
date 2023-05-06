@@ -74,7 +74,14 @@ function GeneroLibro() {
                 value={genero}
                 onChange={changeInput}
             />
-            <button
+            <button style={{backgroundColor:"#66CC00"
+                            ,color:"white"
+                            ,border:"none"
+                            ,borderRadius:"5px"
+                            ,height:"30px"
+                            ,width:"80px"
+                            ,marginLeft:"10px"
+                            ,marginRight:"10px"}}
                 disabled={ genero.length == 0 }
                 onClick={ isUpdating ? updateGeneroEvent : addGeneroEvent }
             >
@@ -92,26 +99,46 @@ function GeneroLibro() {
             
 
 
-            <ul>
+            <ul  style={{listStyleType:"none"}}>
                 { generos.map((genero) => (
                     <li key={genero.id} >
-                        { genero.descripcion }
-                        <button 
-                            onClick={
-                                () => deleteGeneroEvent(genero.id)
-                            }
-                            disabled={isUpdating}
-                        >
-                            Remove
-                        </button>
-                        <button
-                            disabled={isUpdating}
-                            onClick={
-                                () => startEditGenero(genero.id, genero.descripcion)
-                            }
-                        >
-                            Edit
-                        </button>
+                        <div style={{backgroundColor:"#cce5ff",
+                                    margin:"10px",
+                                    padding:"10px",
+                                    borderRadius:"5px",
+                                    display:"flex",
+                                    justifyContent:"space-between"
+                                    }}>
+                            { genero.descripcion }
+                            <div>
+                                <button style={{backgroundColor:"#FFC400"
+                                                                    , border:"none"
+                                                                    ,borderRadius:"5px"
+                                                                    ,height:"30px"
+                                                                    ,width:"60px"
+                                                                    ,marginRight:"20px"}}
+                                    disabled={isUpdating}
+                                    onClick={
+                                        () => startEditGenero(genero.id, genero.descripcion)
+                                    }
+                                >
+                                    Edit
+                                </button>
+                                <button style={{backgroundColor:"#FF0000"
+                                                                    ,color:"white"
+                                                                    , border:"none"
+                                                                    ,borderRadius:"5px"
+                                                                    ,height:"30px"
+                                                                    ,width:"90px"}}
+                                    onClick={
+                                        () => deleteGeneroEvent(genero.id)
+                                    }
+                                    disabled={isUpdating}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
                     </li>
                     
                 ))}

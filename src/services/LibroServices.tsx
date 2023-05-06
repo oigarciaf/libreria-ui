@@ -14,7 +14,7 @@ export interface LibroType {
   resumen: string;
 }
 
-const URI = "http://localhost:8080";
+const URI = "http://localhost:8000";
 
 // Funciones CRUD para el modelo Libro
 /**######################################################### */

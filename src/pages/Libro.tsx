@@ -6,7 +6,6 @@ import { faRoad } from '@fortawesome/free-solid-svg-icons';
 import { idText } from 'typescript';
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-import Autor from './Autor';
 import {
   useState
   , useEffect
@@ -57,7 +56,7 @@ function Libro() {
 
  
   const addAutorEvent = async () => {
-    const newAutor = await addAutor(autor); // Agrega un nuevo autor
+    const newAutor = await addAutor(autor,id_autor); // Agrega un nuevo autor
     setAutores([...autores, newAutor]); // Actualiza la lista de autores con el nuevo autor agregado
     setAutor(""); // Limpia el campo de entrada del autor
     setShowInput(false);

@@ -1,6 +1,6 @@
 // IdiomaType
 import axios from "axios";
-import Idioma from "../pages/Idioma";
+
 export interface IdiomaType {
     id: number;
     descripcion: string;

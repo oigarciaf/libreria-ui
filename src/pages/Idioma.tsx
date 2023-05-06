@@ -74,7 +74,14 @@ function Idioma() {
                 value={idioma}
                 onChange={changeInput}
             />
-            <button
+            <button style={{backgroundColor:"#66CC00"
+                            ,color:"white"
+                            ,border:"none"
+                            ,borderRadius:"5px"
+                            ,height:"30px"
+                            ,width:"80px"
+                            ,marginLeft:"10px"
+                            ,marginRight:"10px"}}
                 disabled={ idioma.length == 0 }
                 onClick={ isUpdating ? updateIdiomaEvent : addIdiomaEvent }
             >
@@ -92,26 +99,46 @@ function Idioma() {
             
 
 
-            <ul>
+            <ul style={{listStyleType:"none"}}>
                 { idiomas.map((idioma) => (
                     <li key={idioma.id} >
-                        { idioma.descripcion }
-                        <button 
-                            onClick={
-                                () => deleteIdiomaEvent(idioma.id)
-                            }
-                            disabled={isUpdating}
-                        >
-                            Remove
-                        </button>
-                        <button
-                            disabled={isUpdating}
-                            onClick={
-                                () => startEditIdioma(idioma.id, idioma.descripcion)
-                            }
-                        >
-                            Edit
-                        </button>
+                        <div style={{backgroundColor:"#cce5ff",
+                                    margin:"10px",
+                                    padding:"10px",
+                                    borderRadius:"5px",
+                                    display:"flex",
+                                    justifyContent:"space-between"
+                                    }}>
+                            { idioma.descripcion }
+                            <div>
+                                <button style={{backgroundColor:"#FFC400"
+                                                , border:"none"
+                                                ,borderRadius:"5px"
+                                                ,height:"30px"
+                                                ,width:"60px"
+                                                ,marginRight:"20px"}}
+                                    disabled={isUpdating}
+                                    onClick={
+                                        () => startEditIdioma(idioma.id, idioma.descripcion)
+                                    }
+                                >
+                                    Edit
+                                </button>
+                                <button style={{backgroundColor:"#FF0000"
+                                                ,color:"white"
+                                                , border:"none"
+                                                ,borderRadius:"5px"
+                                                ,height:"30px"
+                                                ,width:"90px"}}
+                                    onClick={
+                                        () => deleteIdiomaEvent(idioma.id)
+                                    }
+                                    disabled={isUpdating}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
                     </li>
                     
                 ))}
